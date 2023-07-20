@@ -1,26 +1,29 @@
 import React from "react";
 import { Button, Checkbox, Col, Form, Input, Row } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAccount, getSocketInfo, login } from "../../services/api";
 
-const onFinish = async (values) => {
-  try {
-    const { data: id_token } = await login(values);
-    localStorage.setItem("token", id_token.id_token);
-    const { data } = await getAccount();
-    console.log({ data });
-    const res = await getSocketInfo();
-    console.log({ res });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
 const Login = () => {
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    try {
+      const { data: id_token } = await login(values);
+      localStorage.setItem("token", id_token.id_token);
+      const { data } = await getAccount();
+      console.log({ data });
+      const res = await getSocketInfo();
+      console.log({ res });
+      navigate("/org");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
     <div
       style={{ height: "100vh" }}
