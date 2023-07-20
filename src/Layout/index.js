@@ -24,7 +24,12 @@ export default function AppLayout({ children }) {
 
   return (
     <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider
+        style={{ minHeight: "100vh" }}
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
         <div className="fixed z-50">
           <div className="demo-logo-vertical" />
           <div className="py-4">
@@ -51,7 +56,7 @@ export default function AppLayout({ children }) {
                 key: "2",
                 icon: <LiaUsersCogSolid />,
                 label: "Employees",
-                onClick: () => navigate("/org"),
+                onClick: () => navigate("/employee"),
               },
             ]}
           />
