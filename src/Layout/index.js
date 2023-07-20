@@ -23,40 +23,45 @@ export default function AppLayout({ children }) {
   } = theme.useToken();
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <div className="py-4">
-          <img src={logo} alt="" />
+        <div className="fixed z-50">
+          <div className="demo-logo-vertical" />
+          <div className="py-4">
+            <img src={logo} alt="" />
+          </div>
+          <Divider className="bg-gray-500 -mt-1 mb-5" />
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            items={[
+              {
+                key: "3",
+                icon: <DashboardOutlined />,
+                label: "Dashboard",
+              },
+              {
+                key: "1",
+                icon: <GoOrganization />,
+                label: "Organizations",
+                onClick: () => navigate("/org"),
+              },
+              {
+                key: "2",
+                icon: <LiaUsersCogSolid />,
+                label: "Employees",
+                onClick: () => navigate("/org"),
+              },
+            ]}
+          />
         </div>
-        <Divider className="bg-gray-500 -mt-1 mb-5" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "3",
-              icon: <DashboardOutlined />,
-              label: "Dashboard",
-            },
-            {
-              key: "1",
-              icon: <GoOrganization />,
-              label: "Organizations",
-              onClick: () => navigate("/org"),
-            },
-            {
-              key: "2",
-              icon: <LiaUsersCogSolid />,
-              label: "Employees",
-              onClick: () => navigate("/org"),
-            },
-          ]}
-        />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header
+          className="fixed w-full z-50"
+          style={{ padding: 0, background: colorBgContainer }}
+        >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -70,7 +75,7 @@ export default function AppLayout({ children }) {
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
+            margin: "82px 16px",
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,

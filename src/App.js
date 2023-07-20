@@ -11,10 +11,8 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        {/* <Switch> */}
         <PublicRoutes />
         <ProtectedRoutes />
-        {/* </Switch> */}
       </div>
     </Router>
   );
