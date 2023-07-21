@@ -3,6 +3,7 @@ import React from "react";
 import { Route, Navigate, Routes } from "react-router-dom";
 import Org from "../pages/Org/Org";
 import Employee from "../pages/Employee/Employee";
+import User from "../pages/User/User";
 
 const isAuthenticated = () => {
   return true;
@@ -26,6 +27,7 @@ const ProtectedRoutes = () => {
     <>
       <PrivateRoute exact path="/org" Component={Org} />
       <PrivateRoute exact path="/employee" Component={Employee} />
+      <PrivateRoute exact path="/user" Component={User} />
     </>
   );
 };

@@ -12,6 +12,7 @@ import logo from "./../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { GoOrganization } from "react-icons/go";
 import { LiaUsersCogSolid } from "react-icons/lia";
+import { PiUsersThree } from "react-icons/pi";
 
 const { Header, Sider, Content } = Layout;
 
@@ -57,6 +58,12 @@ export default function AppLayout({ children }) {
                 icon: <LiaUsersCogSolid />,
                 label: "Employees",
                 onClick: () => navigate("/employee"),
+              },
+              {
+                key: "2",
+                icon: <PiUsersThree />,
+                label: "Users",
+                onClick: () => navigate("/user"),
               },
             ]}
           />

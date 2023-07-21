@@ -7,6 +7,7 @@ import {
   SIGNUP,
   ORGS,
   EMPLOYEES,
+  ADMIN_USERS,
 } from "../../constants";
 import Employee from "../../pages/Employee/Employee";
 
@@ -185,31 +186,19 @@ export const deleteEmployee = (id) => {
   );
 };
 
-// export const updatePassword = (data, id) => {
-//     return axios.put(
-//         `${API_PREFIX}${UPDATE_PASSWORD}${id}`,
-//         data,
-//         {
-//             [AXIOS_RETRY]: {
-//                 retries: 3,
-//             },
-//             errorHandling: {
-//                 global: true,
-//             },
-//         }
-//     );
-// };
-
-// export const deleteUser = (id) => {
-//     return axios.delete(
-//         `${API_PREFIX}${USER}${id}`,
-//         {
-//             [AXIOS_RETRY]: {
-//                 retries: 3,
-//             },
-//             errorHandling: {
-//                 global: true,
-//             },
-//         }
-//     );
-// };
+export const getUsers = () => {
+  return axios.get(
+    `${API_PREFIX}${ADMIN_USERS}?page=${0}&size=${20}&sort=${"id,asc"}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
