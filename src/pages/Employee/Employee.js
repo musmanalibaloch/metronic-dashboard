@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import AppLayout from "./../../Layout";
-import { getEmployees } from "../../services/api";
+import {
+  deleteEmployee,
+  getEmployees,
+  updateEmployee,
+} from "../../services/api";
 import EmployeeTable from "../../components/tables/EmployeeTable";
 
 const Employee = () => {
   const [tableData, setTableData] = useState([]);
 
-  const getAllOrgs = async () => {
+  const getAllEmployees = async () => {
     try {
       const { data } = await getEmployees();
       console.log({ data });
@@ -16,14 +20,34 @@ const Employee = () => {
     }
   };
 
+  const updateRecord = async (id, values) => {
+    try {
+      const { data } = await updateEmployee(id, values);
+      console.log({ data });
+      getAllEmployees();
+    } catch (error) {}
+  };
+
+  const deleteRecord = async (id) => {
+    try {
+      const { data } = await deleteEmployee(id);
+      console.log({ data });
+      getAllEmployees();
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    getAllOrgs();
+    getAllEmployees();
   }, []);
 
   return (
     <AppLayout>
       <div>
-        <EmployeeTable data={tableData} />
+        <EmployeeTable
+          onUpdate={updateRecord}
+          onDelete={deleteRecord}
+          data={tableData}
+        />
       </div>
     </AppLayout>
   );

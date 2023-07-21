@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import OrgTable from "../../components/tables/OrgTable";
 import AppLayout from "./../../Layout";
-import { getOrgs } from "../../services/api";
+import { deleteOrgs, getOrgs, updateOrgs } from "../../services/api";
 
 const Org = () => {
   const [tableData, setTableData] = useState([]);
@@ -9,11 +9,26 @@ const Org = () => {
   const getAllOrgs = async () => {
     try {
       const { data } = await getOrgs();
-      console.log({ data });
       setTableData(data);
     } catch (error) {
       console.log({ error });
     }
+  };
+
+  const updateRecord = async (id, values) => {
+    try {
+      const { data } = await updateOrgs(id, values);
+      console.log({ data });
+      getAllOrgs();
+    } catch (error) {}
+  };
+
+  const deleteRecord = async (id) => {
+    try {
+      const { data } = await deleteOrgs(id);
+      console.log({ data });
+      getAllOrgs();
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -23,7 +38,11 @@ const Org = () => {
   return (
     <AppLayout>
       <div>
-        <OrgTable data={tableData} />
+        <OrgTable
+          onDelete={deleteRecord}
+          onUpdate={updateRecord}
+          data={tableData}
+        />
       </div>
     </AppLayout>
   );

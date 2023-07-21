@@ -8,6 +8,7 @@ import {
   ORGS,
   EMPLOYEES,
 } from "../../constants";
+import Employee from "../../pages/Employee/Employee";
 
 const { REACT_APP_AXIOS_RETRY, REACT_APP_API_PREFIX, REACT_APP_CONTENT_TYPE } =
   process.env;
@@ -96,9 +97,80 @@ export const getOrgs = () => {
   );
 };
 
+export const updateOrgs = (id, data) => {
+  return axios.put(
+    `${API_PREFIX}${ORGS}/${id}`,
+    data,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const deleteOrgs = (id) => {
+  return axios.delete(
+    `${API_PREFIX}${ORGS}/${id}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
 export const getEmployees = () => {
   return axios.get(
     `${API_PREFIX}${EMPLOYEES}?page=${0}&size=${20}&sort=${"id,asc"}&cacheBuster=${cachebuster}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const updateEmployee = (id, data) => {
+  console.log({ id });
+  return axios.put(
+    `${API_PREFIX}${EMPLOYEES}/${id}`,
+    data,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const deleteEmployee = (id) => {
+  return axios.delete(
+    `${API_PREFIX}${EMPLOYEES}/${id}`,
     {
       headers,
     },
