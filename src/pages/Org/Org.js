@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import OrgTable from "../../components/tables/OrgTable";
 import AppLayout from "./../../Layout";
 import { deleteOrgs, getOrgs, updateOrgs } from "../../services/api";
+import { Link } from "react-router-dom";
 
 const Org = () => {
   const [tableData, setTableData] = useState([]);
@@ -36,7 +37,16 @@ const Org = () => {
   }, []);
 
   return (
-    <AppLayout>
+    <AppLayout
+      breadcrum={[
+        {
+          title: <Link to="">Entities</Link>,
+        },
+        {
+          title: "Org",
+        },
+      ]}
+    >
       <div>
         <OrgTable
           onDelete={deleteRecord}
