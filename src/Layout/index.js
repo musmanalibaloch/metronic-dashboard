@@ -16,8 +16,9 @@ import {
   Breadcrumb,
   Avatar,
   Dropdown,
+  Typography,
 } from "antd";
-import logo from "./../assets/logo.svg";
+import logo from "./../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { GoOrganization } from "react-icons/go";
 import { LiaUsersCogSolid } from "react-icons/lia";
@@ -26,6 +27,7 @@ import { BsCardChecklist } from "react-icons/bs";
 import { RiUserSettingsLine } from "react-icons/ri";
 
 const { Header, Sider, Content } = Layout;
+const { Text } = Typography;
 
 export default function AppLayout({ children, breadcrum }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -60,7 +62,7 @@ export default function AppLayout({ children, breadcrum }) {
           minHeight: "100vh",
           position: "fixed",
           zIndex: 51,
-          top: 0,
+          top: 64,
         }}
         trigger={null}
         collapsible
@@ -68,10 +70,8 @@ export default function AppLayout({ children, breadcrum }) {
       >
         <div className="">
           <div className="demo-logo-vertical" />
-          <div className="py-4">
-            <img src={logo} alt="" />
-          </div>
-          <Divider className="bg-gray-500 -mt-1 mb-5" />
+
+          {/* <Divider className="bg-gray-500 -mt-1 mb-5" /> */}
           <Menu
             theme="dark"
             mode="inline"
@@ -122,21 +122,21 @@ export default function AppLayout({ children, breadcrum }) {
           />
         </div>
       </Sider>
-      <div
-        style={{
-          minWidth: `${collapsed ? "80px" : "200px"}`,
-          maxWidth: `${collapsed ? "80px" : "200px"}`,
-          width: `${collapsed ? "80px" : "200px"}`,
-          transition: "0.3s",
-        }}
-      ></div>
+
       <Layout>
         <Header
           className="fixed w-full z-50"
           style={{ padding: 0, background: colorBgContainer }}
         >
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
+            <div
+              style={{ width: "200px", backgroundColor: "#171a21" }}
+              className="py-4"
+            >
+              <img style={{ height: 35 }} src={logo} alt="" />
+            </div>
             <Button
+              className="mr-2"
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={() => setCollapsed(!collapsed)}
@@ -147,7 +147,12 @@ export default function AppLayout({ children, breadcrum }) {
               }}
             />
             <div className="flex justify-between items-center w-9/12">
-              <Breadcrumb items={breadcrum} />
+              <div className="flex flex-col">
+                <Text className="font-bold text-md -mt-1">
+                  {breadcrum.pageTitle}
+                </Text>
+                <Breadcrumb items={breadcrum.data} />
+              </div>
               <Dropdown menu={{ items }} placement="bottomLeft" arrow>
                 <Avatar
                   shape="square"
@@ -159,16 +164,27 @@ export default function AppLayout({ children, breadcrum }) {
             </div>
           </div>
         </Header>
-        <Content
-          style={{
-            margin: "82px 16px",
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-          }}
-        >
-          {children}
-        </Content>
+        <div className="flex">
+          <div
+            style={{
+              minWidth: `${collapsed ? "80px" : "200px"}`,
+              maxWidth: `${collapsed ? "80px" : "200px"}`,
+              width: `${collapsed ? "80px" : "200px"}`,
+              transition: "0.3s",
+            }}
+          ></div>
+          <Content
+            style={{
+              margin: "82px 16px",
+              borderRadius: 9,
+              padding: 24,
+              minHeight: 280,
+              background: colorBgContainer,
+            }}
+          >
+            {children}
+          </Content>
+        </div>
       </Layout>
     </Layout>
   );

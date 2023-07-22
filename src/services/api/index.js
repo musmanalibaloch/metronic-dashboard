@@ -37,6 +37,7 @@ export const signup = (data) => {
 };
 
 export const login = (data) => {
+  localStorage.removeItem("token");
   return axios.post(`${API_PREFIX}${LOGIN}`, data, {
     [AXIOS_RETRY]: {
       retries: 3,

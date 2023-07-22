@@ -6,6 +6,11 @@ import {
   updateEmployee,
 } from "../../services/api";
 import EmployeeTable from "../../components/tables/EmployeeTable";
+import { Link } from "react-router-dom";
+import { Button, Typography } from "antd";
+import { HiOutlinePlusSm, HiOutlineRefresh } from "react-icons/hi";
+
+const { Text } = Typography;
 
 const Employee = () => {
   const [tableData, setTableData] = useState([]);
@@ -40,9 +45,42 @@ const Employee = () => {
     getAllEmployees();
   }, []);
 
+  const breadcrum = {
+    pageTitle: "Employees",
+    data: [
+      {
+        title: <Link to="">Entities</Link>,
+      },
+      {
+        title: "Employees",
+      },
+    ],
+  };
+
   return (
-    <AppLayout>
+    <AppLayout breadcrum={breadcrum}>
       <div>
+        <div className="flex justify-between mb-4">
+          <div>
+            <Text className="text-xl font-semibold">Employees List</Text>
+          </div>
+          <div className="flex items-center">
+            <Button
+              size="large"
+              className="flex items-center border-none bg-gray-100 mr-2"
+            >
+              <HiOutlineRefresh className="mr-1" />
+              Refresh List
+            </Button>
+            <Button
+              size="large"
+              className="flex items-center border-none bg-blue-500 text-white opacity-80"
+            >
+              <HiOutlinePlusSm className="mr-1" />
+              Create Employee
+            </Button>
+          </div>
+        </div>
         <EmployeeTable
           onUpdate={updateRecord}
           onDelete={deleteRecord}

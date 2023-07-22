@@ -10,7 +10,7 @@ const Login = () => {
     try {
       const { data: id_token } = await login(values);
       localStorage.setItem("token", id_token.id_token);
-      const { data } = await getAccount();
+      const { data } = await getAccount(id_token.id_token);
       console.log({ data });
       const res = await getSocketInfo();
       console.log({ res });
