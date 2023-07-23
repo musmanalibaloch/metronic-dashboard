@@ -7,6 +7,8 @@ import User from "../pages/User/User";
 import Tracker from "../pages/Tracker/Tracker";
 import Metrics from "../pages/Metrics/Metrics";
 import Health from "../pages/Health/Health";
+import Configuration from "../pages/Configuration/Configuration";
+import Logs from "../pages/Logs/Logs";
 
 const isAuthenticated = () => {
   return true;
@@ -34,6 +36,8 @@ const ProtectedRoutes = () => {
       <PrivateRoute exact path="/tracker" Component={Tracker} />
       <PrivateRoute exact path="/metrics" Component={Metrics} />
       <PrivateRoute exact path="/health" Component={Health} />
+      <PrivateRoute exact path="/configuration" Component={Configuration} />
+      <PrivateRoute exact path="/logs" Component={Logs} />
     </>
   );
 };

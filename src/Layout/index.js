@@ -23,10 +23,11 @@ import { useNavigate } from "react-router-dom";
 import { GoOrganization } from "react-icons/go";
 import { LiaUsersCogSolid } from "react-icons/lia";
 import { PiGraphLight, PiUsersThree } from "react-icons/pi";
-import { BsCardChecklist } from "react-icons/bs";
+import { BsCardChecklist, BsListCheck } from "react-icons/bs";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { CgTrack } from "react-icons/cg";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
+import { FcDataConfiguration } from "react-icons/fc";
 
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
@@ -62,6 +63,10 @@ export default function AppLayout({ children, breadcrum }) {
       ? ["5", "8"]
       : window.location.pathname === "/health"
       ? ["5", "9"]
+      : window.location.pathname === "/configuration"
+      ? ["5", "10"]
+      : window.location.pathname === "/logs"
+      ? ["5", "11"]
       : null;
 
   return (
@@ -140,6 +145,18 @@ export default function AppLayout({ children, breadcrum }) {
                     icon: <MdOutlineHealthAndSafety />,
                     label: "Health",
                     onClick: () => navigate("/health"),
+                  },
+                  {
+                    key: "10",
+                    icon: <FcDataConfiguration />,
+                    label: "Configuration",
+                    onClick: () => navigate("/configuration"),
+                  },
+                  {
+                    key: "11",
+                    icon: <BsListCheck />,
+                    label: "Logs",
+                    onClick: () => navigate("/logs"),
                   },
                 ],
               },

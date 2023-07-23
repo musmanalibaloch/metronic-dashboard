@@ -3,18 +3,13 @@ import { Link } from "react-router-dom";
 import { Button, Typography } from "antd";
 import { HiOutlineRefresh } from "react-icons/hi";
 import HealthTable from "../../components/tables/HealthTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getHealth } from "../../services/api";
 
 const { Text } = Typography;
 
 const Health = () => {
-  const [tableData, setTableData] = useState([
-    { servieName: "db", status: true, details: {} },
-    { servieName: "diskSpace", status: false, details: {} },
-    { servieName: "livenessState", status: true, details: {} },
-    { servieName: "ping", status: false, details: {} },
-    { servieName: "readinessState", status: true, details: {} },
-  ]);
+  const [tableData, setTableData] = useState([]);
   const breadcrum = {
     pageTitle: "Health",
     data: [
@@ -26,6 +21,26 @@ const Health = () => {
       },
     ],
   };
+
+  const getAllHealths = async () => {
+    try {
+      const { data } = await getHealth();
+      const dataArray = Object.keys(data.components).map((key) => {
+        return {
+          name: key,
+          data: data.components[key],
+        };
+      });
+      console.log({ dataArray });
+      setTableData(dataArray);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllHealths();
+  }, []);
 
   return (
     <AppLayout breadcrum={breadcrum}>

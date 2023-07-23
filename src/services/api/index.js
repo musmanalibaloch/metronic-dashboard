@@ -8,15 +8,21 @@ import {
   ORGS,
   EMPLOYEES,
   ADMIN_USERS,
+  MANAGEMENT_HEALTH,
 } from "../../constants";
 import Employee from "../../pages/Employee/Employee";
 
-const { REACT_APP_AXIOS_RETRY, REACT_APP_API_PREFIX, REACT_APP_CONTENT_TYPE } =
-  process.env;
+const {
+  REACT_APP_AXIOS_RETRY,
+  REACT_APP_API_PREFIX,
+  REACT_APP_CONTENT_TYPE,
+  REACT_APP_SOCKET_ENDPOINT,
+} = process.env;
 
 // Constants
 const AXIOS_RETRY = REACT_APP_AXIOS_RETRY;
 const API_PREFIX = REACT_APP_API_PREFIX;
+const SOCKET_API_PREFIX = REACT_APP_SOCKET_ENDPOINT;
 const CONTENT_TYPE = REACT_APP_CONTENT_TYPE;
 
 const token = localStorage.getItem("token");
@@ -225,6 +231,23 @@ export const deleteUser = (id) => {
 export const getUsers = () => {
   return axios.get(
     `${API_PREFIX}${ADMIN_USERS}?page=${0}&size=${20}&sort=${"id,asc"}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const getHealth = () => {
+  return axios.get(
+    `${SOCKET_API_PREFIX}${MANAGEMENT_HEALTH}`,
     {
       headers,
     },

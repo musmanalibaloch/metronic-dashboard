@@ -1,29 +1,11 @@
-import { Typography } from "antd";
+export function formatBytes(bytes, decimals = 2) {
+  if (!+bytes) return "0 Bytes";
 
-const { Text, Link } = Typography;
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
-export const getTreeArray = (data, treeKey) => {
-    let array = []
-    Object.entries(data).forEach(([key, value], i) => {
-        const separated = key.replace(/([A-Z])/g, ' $1').trim()
-        const capitalized = separated.replace(/^(.)|\s+(.)/g, c => c.toUpperCase());
-        let title = capitalized
-        let valueArray = []
-        if (value) {
-            if (typeof value === 'object') {
-                valueArray.push(getTreeArray(value, treeKey ? `${treeKey}-${i + 1}` : `1-${i + 1}`))
-            } else {
-                title = `${title} : ${typeof value === "number" ? value.toFixed(2) : value}`
-            }
-        }
-        const data = {
-            title: title,
-            key: treeKey ? `${treeKey}-${i + 1}` : `1-${i + 1}`,
-            children: valueArray.length ? valueArray[0] : valueArray
-        }
-        if (data.children) {
-            array.push(data)
-        }
-    });
-    return array
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
