@@ -26,6 +26,7 @@ import { PiGraphLight, PiUsersThree } from "react-icons/pi";
 import { BsCardChecklist } from "react-icons/bs";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { CgTrack } from "react-icons/cg";
+import { MdOutlineHealthAndSafety } from "react-icons/md";
 
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
@@ -59,6 +60,8 @@ export default function AppLayout({ children, breadcrum }) {
       ? ["5", "7"]
       : window.location.pathname === "/metrics"
       ? ["5", "8"]
+      : window.location.pathname === "/health"
+      ? ["5", "9"]
       : null;
 
   return (
@@ -131,6 +134,12 @@ export default function AppLayout({ children, breadcrum }) {
                     icon: <PiGraphLight />,
                     label: "Metrics",
                     onClick: () => navigate("/metrics"),
+                  },
+                  {
+                    key: "9",
+                    icon: <MdOutlineHealthAndSafety />,
+                    label: "Health",
+                    onClick: () => navigate("/health"),
                   },
                 ],
               },
