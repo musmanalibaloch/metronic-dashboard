@@ -22,9 +22,10 @@ import logo from "./../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { GoOrganization } from "react-icons/go";
 import { LiaUsersCogSolid } from "react-icons/lia";
-import { PiUsersThree } from "react-icons/pi";
+import { PiGraphLight, PiUsersThree } from "react-icons/pi";
 import { BsCardChecklist } from "react-icons/bs";
 import { RiUserSettingsLine } from "react-icons/ri";
+import { CgTrack } from "react-icons/cg";
 
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
@@ -54,7 +55,12 @@ export default function AppLayout({ children, breadcrum }) {
       ? ["2", "4"]
       : window.location.pathname === "/user"
       ? ["5", "6"]
+      : window.location.pathname === "/tracker"
+      ? ["5", "7"]
+      : window.location.pathname === "/metrics"
+      ? ["5", "8"]
       : null;
+
   return (
     <Layout>
       <Sider
@@ -88,7 +94,6 @@ export default function AppLayout({ children, breadcrum }) {
                 key: "2",
                 icon: <BsCardChecklist />,
                 label: "Entities",
-                // onClick: () => navigate("/org"),
                 children: [
                   {
                     key: "3",
@@ -108,13 +113,24 @@ export default function AppLayout({ children, breadcrum }) {
                 key: "5",
                 icon: <RiUserSettingsLine />,
                 label: "Administration",
-                onClick: () => navigate("/user"),
                 children: [
                   {
-                    key: "5",
+                    key: "6",
                     icon: <PiUsersThree />,
                     label: "Users",
                     onClick: () => navigate("/user"),
+                  },
+                  {
+                    key: "7",
+                    icon: <CgTrack />,
+                    label: "Tracker",
+                    onClick: () => navigate("/tracker"),
+                  },
+                  {
+                    key: "8",
+                    icon: <PiGraphLight />,
+                    label: "Metrics",
+                    onClick: () => navigate("/metrics"),
                   },
                 ],
               },
@@ -178,8 +194,8 @@ export default function AppLayout({ children, breadcrum }) {
               margin: "82px 16px",
               borderRadius: 9,
               padding: 24,
-              minHeight: 280,
               background: colorBgContainer,
+              minHeight: "74.8vh",
             }}
           >
             {children}

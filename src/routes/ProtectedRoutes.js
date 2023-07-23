@@ -4,6 +4,8 @@ import { Route, Navigate, Routes } from "react-router-dom";
 import Org from "../pages/Org/Org";
 import Employee from "../pages/Employee/Employee";
 import User from "../pages/User/User";
+import Tracker from "../pages/Tracker/Tracker";
+import Metrics from "../pages/Metrics/Metrics";
 
 const isAuthenticated = () => {
   return true;
@@ -28,6 +30,8 @@ const ProtectedRoutes = () => {
       <PrivateRoute exact path="/org" Component={Org} />
       <PrivateRoute exact path="/employee" Component={Employee} />
       <PrivateRoute exact path="/user" Component={User} />
+      <PrivateRoute exact path="/tracker" Component={Tracker} />
+      <PrivateRoute exact path="/metrics" Component={Metrics} />
     </>
   );
 };

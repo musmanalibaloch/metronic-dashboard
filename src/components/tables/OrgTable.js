@@ -124,7 +124,7 @@ const OrgTable = ({ data, onUpdate, onDelete }) => {
 
   return (
     <>
-      <Table onc columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} />
       <Modal
         title="Edit the record"
         centered
