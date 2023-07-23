@@ -68,6 +68,7 @@ const Employee = () => {
             <Button
               size="large"
               className="flex items-center border-none bg-gray-100 mr-2"
+              onClick={getAllEmployees}
             >
               <HiOutlineRefresh className="mr-1" />
               Refresh List

@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import AppLayout from "./../../Layout";
-import { deleteEmployee, getUsers, updateEmployee } from "../../services/api";
+import {
+  deleteEmployee,
+  deleteUser,
+  getUsers,
+  updateEmployee,
+  updateUser,
+} from "../../services/api";
 import UserTable from "../../components/tables/UserTable";
 import { Link } from "react-router-dom";
 import { Button, Typography } from "antd";
@@ -23,16 +29,14 @@ const User = () => {
 
   const updateRecord = async (id, values) => {
     try {
-      const { data } = await updateEmployee(id, values);
-      console.log({ data });
+      const { data } = await updateUser({ id, ...values });
       getAllUsers();
     } catch (error) {}
   };
 
-  const deleteRecord = async (id) => {
+  const deleteRecord = async (email) => {
     try {
-      const { data } = await deleteEmployee(id);
-      console.log({ data });
+      const { data } = await deleteUser(email);
       getAllUsers();
     } catch (error) {}
   };
@@ -64,6 +68,7 @@ const User = () => {
             <Button
               size="large"
               className="flex items-center border-none bg-gray-100 mr-2"
+              onClick={getAllUsers}
             >
               <HiOutlineRefresh className="mr-1" />
               Refresh List

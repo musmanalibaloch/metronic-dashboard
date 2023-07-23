@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Button,
+  Checkbox,
   Dropdown,
   Form,
   Input,
@@ -24,11 +25,13 @@ const UserTable = ({ data, onUpdate, onDelete }) => {
     setSelectedRecord(obj);
     if (e.key === "1") {
       form.setFieldsValue({
-        firstname: obj.firstname,
-        lastname: obj.lastname,
-        age: obj.age,
-        skills: obj.skills,
-        title: obj.title,
+        firstname: obj.firstName,
+        lastname: obj.lastName,
+        login: obj.login,
+        email: obj.email,
+        activated: obj.activated,
+        langKey: obj.langKey,
+        authorities: obj.authorities,
       });
       setOpen(true);
     } else {
@@ -158,7 +161,7 @@ const UserTable = ({ data, onUpdate, onDelete }) => {
   };
 
   const deleteRecord = () => {
-    onDelete(selectedRecord?.id);
+    onDelete(selectedRecord?.email);
     setSelectedRecord(null);
     setOpenDelete(false);
   };
@@ -187,8 +190,15 @@ const UserTable = ({ data, onUpdate, onDelete }) => {
           autoComplete="off"
         >
           <Form.Item
+            label="Login"
+            name="login"
+            rules={[{ required: true, message: "Please input your login!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
             label="First Name"
-            name="firstname"
+            name="firstName"
             rules={[
               { required: true, message: "Please input your first name!" },
             ]}
@@ -198,7 +208,7 @@ const UserTable = ({ data, onUpdate, onDelete }) => {
 
           <Form.Item
             label="Last Name"
-            name="lastname"
+            name="lastName"
             rules={[
               { required: true, message: "Please input your last name!" },
             ]}
@@ -207,27 +217,75 @@ const UserTable = ({ data, onUpdate, onDelete }) => {
           </Form.Item>
 
           <Form.Item
-            label="Age"
-            name="age"
-            rules={[{ required: true, message: "Please input your age!" }]}
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Skills"
-            name="skills"
-            rules={[{ required: true, message: "Please input your skills!" }]}
+            label="Activated"
+            name="activated"
+            rules={[
+              { required: true, message: "Please input your activated!" },
+            ]}
           >
-            <Input />
+            <Checkbox />
           </Form.Item>
 
           <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please input your title!" }]}
+            label="Language"
+            name="langKey"
+            rules={[{ required: true, message: "Please input your language!" }]}
           >
-            <Input />
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: "1",
+                    label: "English",
+                  },
+                ],
+              }}
+              placement="bottomLeft"
+            >
+              <Button className="w-full">
+                <Space className="flex justify-between">
+                  English
+                  <DownOutlined />
+                </Space>
+              </Button>
+            </Dropdown>
+          </Form.Item>
+
+          <Form.Item
+            label="Profile"
+            name="authorities"
+            rules={[{ required: true, message: "Please input your profile!" }]}
+          >
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: "1",
+                    label: "ROLE_USER",
+                  },
+                  {
+                    key: "2",
+                    label: "ROLE_ADMIN",
+                  },
+                ],
+              }}
+              placement="bottomLeft"
+            >
+              <Button className="w-full">
+                <Space className="flex justify-between">
+                  {selectedRecord?.authorities[0]}
+                  <DownOutlined />
+                </Space>
+              </Button>
+            </Dropdown>
           </Form.Item>
 
           <div className="flex justify-end w-full pr-6">

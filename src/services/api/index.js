@@ -187,6 +187,41 @@ export const deleteEmployee = (id) => {
   );
 };
 
+export const updateUser = (data) => {
+  return axios.put(
+    `${API_PREFIX}${ADMIN_USERS}`,
+    data,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const deleteUser = (id) => {
+  return axios.delete(
+    `${API_PREFIX}${ADMIN_USERS}/${id}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
 export const getUsers = () => {
   return axios.get(
     `${API_PREFIX}${ADMIN_USERS}?page=${0}&size=${20}&sort=${"id,asc"}`,
