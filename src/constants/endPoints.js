@@ -6,3 +6,5 @@ export const EMPLOYEES = "employees";
 export const ADMIN_USERS = "admin/users";
 export const SIGNUP = "user/signup";
 export const MANAGEMENT_HEALTH = "management/health";
+export const MANAGEMENT_JHIMETRICS = "management/jhimetrics";
+export const MANAGEMENT_THREAD_DUMP = "management/threaddump";

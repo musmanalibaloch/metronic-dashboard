@@ -1,7 +1,11 @@
-import { Button, Col, Progress, Row, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 
 const { Text } = Typography;
-const CacheStatistics = () => {
+const CacheStatistics = ({ cacheData }) => {
+  const dataArray = Object.entries(cacheData || {}).map(([key, value]) => {
+    return { key, ...value };
+  });
+
   return (
     <>
       <Row gutter={16} className="mt-5 border-b py-2">
@@ -24,126 +28,44 @@ const CacheStatistics = () => {
           <Text className="font-semibold">Cache Miss %</Text>
         </Col>
       </Row>
-      <Row gutter={16} className="border-b py-2">
-        <Col span={9}>
-          <Text className="">usersByEmail</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-      </Row>
-      <Row gutter={16} className="border-b py-2">
-        <Col span={9}>
-          <Text className="">com.mycompany.myapp.domain.User</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">8</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">8</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">100</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-      </Row>
-      <Row gutter={16} className="border-b py-2">
-        <Col span={9}>
-          <Text className="">com.mycompany.myapp.domain.Org</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">2314</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">141</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">2455</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">94.26</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">5.74</Text>
-        </Col>
-      </Row>
-      <Row gutter={16} className="border-b py-2">
-        <Col span={9}>
-          <Text className="">usersByEmail</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-      </Row>
-      <Row gutter={16} className="border-b py-2">
-        <Col span={9}>
-          <Text className="">com.mycompany.myapp.domain.User</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">8</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">8</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">100</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">0</Text>
-        </Col>
-      </Row>
-      <Row gutter={16} className="border-b py-2">
-        <Col span={9}>
-          <Text className="">com.mycompany.myapp.domain.Org</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">2314</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">141</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">2455</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">94.26</Text>
-        </Col>
-        <Col span={3} className="text-center">
-          <Text className="">5.74</Text>
-        </Col>
-      </Row>
+      {dataArray?.map((item, i) => {
+        return (
+          <Row gutter={16} className="border-b py-2">
+            <Col span={9}>
+              <Text className="">{item?.key}</Text>
+            </Col>
+            <Col span={3} className="text-center">
+              <Text className="">{item?.["cache.gets.hit"]}</Text>
+            </Col>
+            <Col span={3} className="text-center">
+              <Text className="">{item?.["cache.gets.miss"]}</Text>
+            </Col>
+            <Col span={3} className="text-center">
+              <Text className="">
+                {item?.["cache.gets.hit"] + item?.["cache.gets.miss"]}
+              </Text>
+            </Col>
+            <Col span={3} className="text-center">
+              <Text className="">
+                {(
+                  (item?.["cache.gets.hit"] /
+                    (item?.["cache.gets.hit"] + item?.["cache.gets.miss"])) *
+                  100
+                ).toFixed(2) || 0}
+              </Text>
+            </Col>
+            <Col span={3} className="text-center">
+              <Text className="">
+                {(
+                  (item?.["cache.gets.miss"] /
+                    (item?.["cache.gets.hit"] + item?.["cache.gets.miss"])) *
+                  100
+                ).toFixed(2) || 0}
+              </Text>
+            </Col>
+          </Row>
+        );
+      })}
     </>
   );
 };

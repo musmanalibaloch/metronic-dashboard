@@ -9,6 +9,8 @@ import {
   EMPLOYEES,
   ADMIN_USERS,
   MANAGEMENT_HEALTH,
+  MANAGEMENT_JHIMETRICS,
+  MANAGEMENT_THREAD_DUMP,
 } from "../../constants";
 import Employee from "../../pages/Employee/Employee";
 
@@ -248,6 +250,40 @@ export const getUsers = () => {
 export const getHealth = () => {
   return axios.get(
     `${SOCKET_API_PREFIX}${MANAGEMENT_HEALTH}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const getJHIMetrics = () => {
+  return axios.get(
+    `${SOCKET_API_PREFIX}${MANAGEMENT_JHIMETRICS}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const getThreaddump = () => {
+  return axios.get(
+    `${SOCKET_API_PREFIX}${MANAGEMENT_THREAD_DUMP}`,
     {
       headers,
     },

@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import AppLayout from "./../../Layout";
-import { deleteOrgs, getOrgs, updateOrgs } from "../../services/api";
+import {
+  deleteOrgs,
+  getJHIMetrics,
+  getOrgs,
+  getThreaddump,
+  updateOrgs,
+} from "../../services/api";
 import { Link } from "react-router-dom";
 import { Button, Col, Divider, Progress, Row, Typography } from "antd";
 import { HiOutlineRefresh } from "react-icons/hi";
@@ -14,6 +20,14 @@ import DataSource from "../../components/DataSource/DataSource";
 const { Text } = Typography;
 
 const Metrics = () => {
+  const [jvm, setJvm] = useState([]);
+  const [threaddump, setThreaddump] = useState([]);
+  const [garbage, setGarbage] = useState([]);
+  const [httpData, setHttpData] = useState(null);
+  const [endPointsData, setEndPointsData] = useState(null);
+  const [cacheData, setCacheData] = useState(null);
+  const [databasesData, setDatabasesData] = useState(null);
+
   const breadcrum = {
     pageTitle: "Application Metrics",
     data: [
@@ -25,6 +39,34 @@ const Metrics = () => {
       },
     ],
   };
+
+  const getAllJHIMetrics = async () => {
+    try {
+      const { data } = await getJHIMetrics();
+      setJvm(data?.jvm);
+      setGarbage(data?.garbageCollector);
+      setHttpData(data?.["http.server.requests"]);
+      setEndPointsData(data?.services);
+      setCacheData(data?.cache);
+      setDatabasesData(data?.databases);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  const getALLThreaddump = async () => {
+    try {
+      const { data } = await getThreaddump();
+      setThreaddump(data?.threads);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  useEffect(() => {
+    getAllJHIMetrics();
+    getALLThreaddump();
+  }, []);
 
   return (
     <AppLayout breadcrum={breadcrum}>
@@ -46,31 +88,31 @@ const Metrics = () => {
         <Divider />
       </div>
       <Text className="text-2xl font-semibold">JVM Metrics</Text>
-      <JVMMetrics />
+      <JVMMetrics jvm={jvm} threads={threaddump} />
       <Divider />
       <Text className="text-2xl font-semibold">Garbage Collection</Text>
-      <GarbageCollection />
+      <GarbageCollection garbage={garbage} />
       <Divider className="-mt-1" />
       <Text className="text-2xl font-semibold">
         HTTP requests (time in milliseconds)
       </Text>
-      <HTTP />
+      <HTTP httpData={httpData} />
       <div className="mt-7">
         <Text className="text-2xl font-semibold">
           Endpoints requests (time in milliseconds)
         </Text>
       </div>
-      <Endpoints />
+      <Endpoints endPointsData={endPointsData} />
       <div className="mt-7">
         <Text className="text-2xl font-semibold">Cache statistics</Text>
       </div>
-      <CacheStatistics />
+      <CacheStatistics cacheData={cacheData} />
       <div className="mt-7">
         <Text className="text-2xl font-semibold">
           DataSource statistics (time in millisecond)
         </Text>
       </div>
-      <DataSource />
+      <DataSource databasesData={databasesData} />
     </AppLayout>
   );
 };

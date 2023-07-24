@@ -1,7 +1,11 @@
 import { Button, Col, Progress, Row, Typography } from "antd";
 
 const { Text } = Typography;
-const DataSource = () => {
+const DataSource = ({ databasesData }) => {
+  const dataArray = Object.entries(databasesData || {}).map(([key, value]) => {
+    return { key, ...value };
+  });
+  console.log({ dataArray });
   return (
     <>
       <Row className="mt-5 py-3 border-b">
@@ -33,87 +37,37 @@ const DataSource = () => {
           <Text className="font-bold">Max</Text>
         </Col>
       </Row>
-      <Row className="py-3 border-b">
-        <Col span={12}>Acquire</Col>
-        <Col span={2}>
-          <Text>629</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0.01</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-      </Row>
-      <Row className="py-3 border-b">
-        <Col span={12}>Creation</Col>
-        <Col span={2}>
-          <Text>2152</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0.01</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-      </Row>
-      <Row className="py-3 border-b">
-        <Col span={12}>Usage</Col>
-        <Col span={2}>
-          <Text>629</Text>
-        </Col>
-        <Col span={2}>
-          <Text>4.88</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0</Text>
-        </Col>
-        <Col span={2}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-        <Col span={1}>
-          <Text>0</Text>
-        </Col>
-      </Row>
+      {dataArray?.map((item, i) => {
+        return (
+          <Row className="py-3 border-b">
+            <Col span={12}>{item?.key}</Col>
+            <Col span={2}>
+              <Text>{item?.count?.toFixed(2) || 0}</Text>
+            </Col>
+            <Col span={2}>
+              <Text>{item?.mean?.toFixed(2) || 0}</Text>
+            </Col>
+            <Col span={2}>
+              <Text>{item?.min?.toFixed(2) || 0}</Text>
+            </Col>
+            <Col span={2}>
+              <Text>{item?.["0.5"] || 0}</Text>
+            </Col>
+            <Col span={1}>
+              <Text>{item?.["0.75"] || 0}</Text>
+            </Col>
+            <Col span={1}>
+              <Text>{item?.["0.95"] || 0}</Text>
+            </Col>
+            <Col span={1}>
+              <Text>{item?.["0.99"] || 0}</Text>
+            </Col>
+            <Col span={1}>
+              <Text>{item?.max?.toFixed(2) || 0}</Text>
+            </Col>
+          </Row>
+        );
+      })}
     </>
   );
 };
