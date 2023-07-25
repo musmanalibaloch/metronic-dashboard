@@ -8,3 +8,6 @@ export const SIGNUP = "user/signup";
 export const MANAGEMENT_HEALTH = "management/health";
 export const MANAGEMENT_JHIMETRICS = "management/jhimetrics";
 export const MANAGEMENT_THREAD_DUMP = "management/threaddump";
+export const MANAGEMENT_CONFIG_PROPS = "management/configprops";
+export const MANAGEMENT_ENV = "management/env";
+export const MANAGEMENT_LOGGERS = "management/loggers";

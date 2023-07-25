@@ -11,6 +11,9 @@ import {
   MANAGEMENT_HEALTH,
   MANAGEMENT_JHIMETRICS,
   MANAGEMENT_THREAD_DUMP,
+  MANAGEMENT_CONFIG_PROPS,
+  MANAGEMENT_ENV,
+  MANAGEMENT_LOGGERS,
 } from "../../constants";
 import Employee from "../../pages/Employee/Employee";
 
@@ -284,6 +287,57 @@ export const getJHIMetrics = () => {
 export const getThreaddump = () => {
   return axios.get(
     `${SOCKET_API_PREFIX}${MANAGEMENT_THREAD_DUMP}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const getConfigProps = () => {
+  return axios.get(
+    `${SOCKET_API_PREFIX}${MANAGEMENT_CONFIG_PROPS}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const getManagementEnv = () => {
+  return axios.get(
+    `${SOCKET_API_PREFIX}${MANAGEMENT_ENV}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const getManagementLoggers = () => {
+  return axios.get(
+    `${SOCKET_API_PREFIX}${MANAGEMENT_LOGGERS}`,
     {
       headers,
     },

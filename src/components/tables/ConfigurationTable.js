@@ -14,17 +14,20 @@ const ConfigurationTable = ({ data, onUpdate, onDelete }) => {
     {
       title: "Properties",
       dataIndex: "properties",
-      key: "status",
+      key: "properties",
       render: (obj, record) => {
-        return obj.map((item, i) => {
+        const dataArray = Object.entries(obj || {}).map(([key, value]) => {
+          return { key, value: JSON.stringify(value) };
+        });
+        return dataArray.map((item, i) => {
           return (
             <div key={i}>
               <Row>
                 <Col span={6}>
-                  <Text>{item.name}</Text>
+                  <Text>{item.key}</Text>
                 </Col>
                 <Col span={18} className="text-right">
-                  <Text>{item.data}</Text>
+                  <Text>{item.value}</Text>
                 </Col>
               </Row>
             </div>

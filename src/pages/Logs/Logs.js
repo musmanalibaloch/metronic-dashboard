@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import AppLayout from "./../../Layout";
-import { deleteOrgs, getOrgs, updateOrgs } from "../../services/api";
+import {
+  deleteOrgs,
+  getManagementLoggers,
+  getOrgs,
+  updateOrgs,
+} from "../../services/api";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -23,6 +28,7 @@ import DataSource from "../../components/DataSource/DataSource";
 const { Text } = Typography;
 
 const Logs = () => {
+  const [loggers, setLoggers] = useState([]);
   const breadcrum = {
     pageTitle: "Logs",
     data: [
@@ -34,6 +40,25 @@ const Logs = () => {
       },
     ],
   };
+
+  const getAllManagementLoggers = async () => {
+    try {
+      const { data } = await getManagementLoggers();
+      const dataArray = Object.entries(data?.loggers || {}).map(
+        ([key, value]) => {
+          return { key, ...value };
+        }
+      );
+
+      setLoggers(dataArray);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  useEffect(() => {
+    getAllManagementLoggers();
+  }, []);
 
   return (
     <AppLayout breadcrum={breadcrum}>
@@ -79,64 +104,91 @@ const Logs = () => {
           <Text className="font-bold">Level</Text>
         </Col>
       </Row>
-      <Row>
-        <Col span={17} className="border p-3 rounded-bl-lg">
-          <Text>Root</Text>
-        </Col>
-        <Col span={7} className="border p-3 rounded-br-lg">
-          <Row className="text-center">
-            <Col span={8} className="py-2">
-              Trace
+      {loggers?.map((item, i) => {
+        return (
+          <Row>
+            <Col
+              span={17}
+              className={`border p-3 ${
+                i === loggers.length - 1 ? "rounded-bl-lg" : ""
+              } `}
+            >
+              <Text>{item?.key}</Text>
             </Col>
-            <Col span={8} className="rounded-lg bg-red-500 text-white py-2">
-              Debug
-            </Col>
-            <Col span={8} className=" py-2">
-              Info
+            <Col
+              span={7}
+              className={`border p-3 ${
+                i === loggers.length - 1 ? "rounded-br-lg" : ""
+              } `}
+            >
+              <Row className="text-center">
+                <Col
+                  span={8}
+                  className={`${
+                    item?.effectiveLevel === "TRACE"
+                      ? "rounded-lg bg-orange-500 text-white"
+                      : ""
+                  } py-2`}
+                >
+                  TRACE
+                </Col>
+                <Col
+                  span={8}
+                  className={`${
+                    item?.effectiveLevel === "DEBUG"
+                      ? "rounded-lg bg-green-500 text-white"
+                      : ""
+                  } py-2`}
+                >
+                  DEBUG
+                </Col>
+                <Col
+                  span={8}
+                  className={`${
+                    item?.effectiveLevel === "INFO"
+                      ? "rounded-lg bg-blue-500 text-white"
+                      : ""
+                  } py-2`}
+                >
+                  INFO
+                </Col>
+              </Row>
+              <Row className="text-center mt-3">
+                <Col
+                  span={8}
+                  className={`${
+                    item?.effectiveLevel === "WARN"
+                      ? "rounded-lg bg-yellow-500 text-white"
+                      : ""
+                  } py-2`}
+                >
+                  WARN
+                </Col>
+                <Col
+                  span={8}
+                  className={`${
+                    item?.effectiveLevel === "ERROR"
+                      ? "rounded-lg bg-red-500 text-white"
+                      : ""
+                  } py-2`}
+                >
+                  ERROR
+                </Col>
+                <Col
+                  span={8}
+                  className={`${
+                    item?.effectiveLevel === "OFF"
+                      ? "rounded-lg bg-gray-500 text-white"
+                      : ""
+                  } py-2`}
+                >
+                  OFF
+                </Col>
+              </Row>
             </Col>
           </Row>
-          <Row className="text-center mt-3">
-            <Col span={8} className=" py-2">
-              Trace
-            </Col>
-            <Col span={8} className=" py-2">
-              Debug
-            </Col>
-            <Col span={8} className=" py-2">
-              Info
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={17} className="border p-3 rounded-bl-lg">
-          <Text>org.hibernate.annotations.common.Version</Text>
-        </Col>
-        <Col span={7} className="border p-3 rounded-br-lg uppercase">
-          <Row className="text-center">
-            <Col span={8} className="py-2">
-              Trace
-            </Col>
-            <Col span={8} className="py-2">
-              Debug
-            </Col>
-            <Col span={8} className=" py-2">
-              Info
-            </Col>
-          </Row>
-          <Row className="text-center mt-3">
-            <Col span={8} className="rounded-lg bg-yellow-500 text-white py-2">
-              Warn
-            </Col>
-            <Col span={8} className=" py-2">
-              Error
-            </Col>
-            <Col span={8} className=" py-2">
-              OFF
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+        );
+      })}
     </AppLayout>
   );
 };
