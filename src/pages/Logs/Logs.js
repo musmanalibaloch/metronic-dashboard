@@ -4,6 +4,7 @@ import {
   deleteOrgs,
   getManagementLoggers,
   getOrgs,
+  managementLoggersUpdate,
   updateOrgs,
 } from "../../services/api";
 import { Link } from "react-router-dom";
@@ -56,9 +57,22 @@ const Logs = () => {
     }
   };
 
+  const updateManagementLoggers = async (name, method) => {
+    try {
+      const res = await managementLoggersUpdate(name, method);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   useEffect(() => {
     getAllManagementLoggers();
   }, []);
+
+  const handleValueClick = (name, method) => {
+    updateManagementLoggers(name, method);
+    getAllManagementLoggers();
+  };
 
   return (
     <AppLayout breadcrum={breadcrum}>
@@ -122,67 +136,79 @@ const Logs = () => {
               } `}
             >
               <Row className="text-center">
-                <Col
-                  span={8}
-                  className={`${
-                    item?.effectiveLevel === "TRACE"
-                      ? "rounded-lg bg-orange-500 text-white"
-                      : ""
-                  } py-2`}
-                >
-                  TRACE
+                <Col span={8}>
+                  <Button
+                    onClick={() => handleValueClick(item?.key, "TRACE")}
+                    className={`${
+                      item?.effectiveLevel === "TRACE"
+                        ? "rounded-lg bg-orange-500 text-white"
+                        : "hover:bg-gray-400 rounded-lg cursor-pointer"
+                    } py-2 border-none`}
+                  >
+                    TRACE
+                  </Button>
                 </Col>
-                <Col
-                  span={8}
-                  className={`${
-                    item?.effectiveLevel === "DEBUG"
-                      ? "rounded-lg bg-green-500 text-white"
-                      : ""
-                  } py-2`}
-                >
-                  DEBUG
+                <Col span={8}>
+                  <Button
+                    onClick={() => handleValueClick(item?.key, "DEBUG")}
+                    className={`${
+                      item?.effectiveLevel === "DEBUG"
+                        ? "rounded-lg bg-green-500 text-white"
+                        : "hover:bg-gray-400 rounded-lg cursor-pointer"
+                    } py-2 border-none`}
+                  >
+                    DEBUG
+                  </Button>
                 </Col>
-                <Col
-                  span={8}
-                  className={`${
-                    item?.effectiveLevel === "INFO"
-                      ? "rounded-lg bg-blue-500 text-white"
-                      : ""
-                  } py-2`}
-                >
-                  INFO
+                <Col span={8}>
+                  <Button
+                    onClick={() => handleValueClick(item?.key, "INFO")}
+                    className={`${
+                      item?.effectiveLevel === "INFO"
+                        ? "rounded-lg bg-blue-500 text-white"
+                        : "hover:bg-gray-400 rounded-lg cursor-pointer"
+                    } py-2 border-none`}
+                  >
+                    INFO
+                  </Button>
                 </Col>
               </Row>
               <Row className="text-center mt-3">
-                <Col
-                  span={8}
-                  className={`${
-                    item?.effectiveLevel === "WARN"
-                      ? "rounded-lg bg-yellow-500 text-white"
-                      : ""
-                  } py-2`}
-                >
-                  WARN
+                <Col span={8}>
+                  <Button
+                    onClick={() => handleValueClick(item?.key, "WARN")}
+                    className={`${
+                      item?.effectiveLevel === "WARN"
+                        ? "rounded-lg bg-yellow-500 text-white"
+                        : "hover:bg-gray-400 rounded-lg cursor-pointer"
+                    } py-2 border-none`}
+                  >
+                    WARN
+                  </Button>
                 </Col>
-                <Col
-                  span={8}
-                  className={`${
-                    item?.effectiveLevel === "ERROR"
-                      ? "rounded-lg bg-red-500 text-white"
-                      : ""
-                  } py-2`}
-                >
-                  ERROR
+                <Col span={8}>
+                  <Button
+                    onClick={() => handleValueClick(item?.key, "ERROR")}
+                    className={`${
+                      item?.effectiveLevel === "ERROR"
+                        ? "rounded-lg bg-red-500 text-white"
+                        : "hover:bg-gray-400 rounded-lg cursor-pointer"
+                    } py-2 border-none`}
+                  >
+                    ERROR
+                  </Button>
                 </Col>
-                <Col
-                  span={8}
-                  className={`${
-                    item?.effectiveLevel === "OFF"
-                      ? "rounded-lg bg-gray-500 text-white"
-                      : ""
-                  } py-2`}
-                >
-                  OFF
+                <Col span={8}>
+                  <Button
+                    onClick={() => handleValueClick(item?.key, "OFF")}
+                    className={`${
+                      item?.effectiveLevel === "OFF"
+                        ? "rounded-lg bg-gray-500 text-white"
+                        : "hover:bg-gray-400 rounded-lg cursor-pointer"
+                    } py-2 border-none`}
+                  >
+                    OFF
+                  </Button>
                 </Col>
               </Row>
             </Col>

@@ -351,3 +351,22 @@ export const getManagementLoggers = () => {
     }
   );
 };
+
+export const managementLoggersUpdate = (name, method) => {
+  console.log({ name, method });
+  return axios.post(
+    `${SOCKET_API_PREFIX}${MANAGEMENT_LOGGERS}/${name}`,
+    { configuredLevel: method },
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
