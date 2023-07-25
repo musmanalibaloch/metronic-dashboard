@@ -5,7 +5,6 @@ const DataSource = ({ databasesData }) => {
   const dataArray = Object.entries(databasesData || {}).map(([key, value]) => {
     return { key, ...value };
   });
-  console.log({ dataArray });
   return (
     <>
       <Row className="mt-5 py-3 border-b">
