@@ -6,6 +6,7 @@ import {
   Form,
   Input,
   Modal,
+  Select,
   Space,
   Table,
   Tag,
@@ -239,24 +240,10 @@ const UserTable = ({ data, onUpdate, onDelete }) => {
             name="langKey"
             rules={[{ required: true, message: "Please input your language!" }]}
           >
-            <Dropdown
-              menu={{
-                items: [
-                  {
-                    key: "1",
-                    label: "English",
-                  },
-                ],
-              }}
-              placement="bottomLeft"
-            >
-              <Button className="w-full">
-                <Space className="flex justify-between">
-                  English
-                  <DownOutlined />
-                </Space>
-              </Button>
-            </Dropdown>
+            <Select
+              defaultValue="en"
+              options={[{ value: "en", label: "English" }]}
+            />
           </Form.Item>
 
           <Form.Item
@@ -264,28 +251,13 @@ const UserTable = ({ data, onUpdate, onDelete }) => {
             name="authorities"
             rules={[{ required: true, message: "Please input your profile!" }]}
           >
-            <Dropdown
-              menu={{
-                items: [
-                  {
-                    key: "1",
-                    label: "ROLE_USER",
-                  },
-                  {
-                    key: "2",
-                    label: "ROLE_ADMIN",
-                  },
-                ],
-              }}
-              placement="bottomLeft"
-            >
-              <Button className="w-full">
-                <Space className="flex justify-between">
-                  {selectedRecord?.authorities[0]}
-                  <DownOutlined />
-                </Space>
-              </Button>
-            </Dropdown>
+            <Select
+              defaultValue={selectedRecord?.authorities[0]}
+              options={[
+                { value: "ROLE_USER", label: "ROLE_USER" },
+                { value: "ROLE_ADMIN", label: "ROLE_ADMIN" },
+              ]}
+            />
           </Form.Item>
 
           <div className="flex justify-end w-full pr-6">

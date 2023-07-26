@@ -15,8 +15,8 @@ import { useState } from "react";
 
 const { Text } = Typography;
 const JVMMetrics = ({ jvm, threads }) => {
-  console.log({ threads });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lockNameFilter, setLockNameFilter] = useState("");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -29,6 +29,19 @@ const JVMMetrics = ({ jvm, threads }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const handleSearch = (val) => {
+    setLockNameFilter(val);
+  };
+
+  const filteredData = threads.filter((item) => {
+    if (lockNameFilter.trim() === "") {
+      return true; // No filter applied, show all data
+    }
+
+    // Modify this condition to match your desired filtering criteria.
+    return item.lockName && item.lockName.includes(lockNameFilter);
+  });
 
   return (
     <>
@@ -209,8 +222,12 @@ const JVMMetrics = ({ jvm, threads }) => {
             />
           </Button>
         </div>
-        <Input className="mt-5" placeholder="Filter by lock name..." />
-        {threads?.map((item, i) => {
+        <Input
+          onChange={(e) => handleSearch(e.target.value)}
+          className="mt-5"
+          placeholder="Filter by lock name..."
+        />
+        {filteredData?.map((item, i) => {
           return (
             <div key={i} className="">
               <div className="text-center mt-3">

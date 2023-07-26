@@ -114,6 +114,24 @@ export const getOrgs = () => {
   );
 };
 
+export const createOrg = (data) => {
+  return axios.post(
+    `${API_PREFIX}${ORGS}`,
+    data,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
 export const updateOrgs = (id, data) => {
   return axios.put(
     `${API_PREFIX}${ORGS}/${id}`,
@@ -152,6 +170,24 @@ export const deleteOrgs = (id) => {
 export const getEmployees = () => {
   return axios.get(
     `${API_PREFIX}${EMPLOYEES}?page=${0}&size=${20}&sort=${"id,asc"}&cacheBuster=${cachebuster}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const createEmployees = (data) => {
+  return axios.post(
+    `${API_PREFIX}${EMPLOYEES}`,
+    data,
     {
       headers,
     },
@@ -240,6 +276,24 @@ export const deleteUser = (id) => {
 export const getUsers = () => {
   return axios.get(
     `${API_PREFIX}${ADMIN_USERS}?page=${0}&size=${20}&sort=${"id,asc"}`,
+    {
+      headers,
+    },
+    {
+      [AXIOS_RETRY]: {
+        retries: 2,
+      },
+      errorHandling: {
+        global: true,
+      },
+    }
+  );
+};
+
+export const createUsers = (data) => {
+  return axios.get(
+    `${API_PREFIX}${ADMIN_USERS}`,
+    data,
     {
       headers,
     },

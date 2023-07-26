@@ -89,8 +89,8 @@ const Logs = () => {
                 <Text className="text-xl font-semibold">Logs</Text>
               </div>
             </div>
-            <Text>There are 1442 loggers.</Text>
-            <div className="mt-3">
+            <Text>There are {loggers?.lenght || 0} loggers.</Text>
+            {/* <div className="mt-3">
               <Form
                 name="basic"
                 labelCol={{
@@ -114,7 +114,7 @@ const Logs = () => {
                   <Input />
                 </Form.Item>
               </Form>
-            </div>
+            </div> */}
             <Divider />
           </div>
           <Row>
