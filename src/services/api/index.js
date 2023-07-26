@@ -59,11 +59,13 @@ export const login = (data) => {
   });
 };
 
-export const getAccount = () => {
+export const getAccount = (token) => {
   return axios.get(
     `${API_PREFIX}${ACCOUNT}`,
     {
-      headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
     {
       [AXIOS_RETRY]: {
@@ -76,11 +78,13 @@ export const getAccount = () => {
   );
 };
 
-export const getSocketInfo = () => {
+export const getSocketInfo = (accessToken) => {
   return axios.get(
-    `${API_PREFIX}${WEBSOCKET_TRACKER_INFO}?access_token=${token}`,
+    `${API_PREFIX}${WEBSOCKET_TRACKER_INFO}?access_token=${accessToken}`,
     {
-      headers,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     },
     {
       [AXIOS_RETRY]: {

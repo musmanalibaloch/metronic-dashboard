@@ -1,5 +1,5 @@
 // ProtectedRoutes.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Navigate, Routes } from "react-router-dom";
 import Org from "../pages/Org/Org";
 import Employee from "../pages/Employee/Employee";
@@ -9,36 +9,75 @@ import Metrics from "../pages/Metrics/Metrics";
 import Health from "../pages/Health/Health";
 import Configuration from "../pages/Configuration/Configuration";
 import Logs from "../pages/Logs/Logs";
+import { message } from "antd";
+import { getAccount } from "../services/api";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
-const isAuthenticated = () => {
-  return true;
-};
+const antIcon = <LoadingOutlined style={{ fontSize: 100 }} spin />;
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Routes>
-      <Route
-        {...rest}
-        render={(props) =>
-          isAuthenticated() ? <Component {...props} /> : <Navigate to="/" />
+  // State to track the authentication status and loading state
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Function to check authentication status
+    const token = localStorage.getItem("token");
+    const checkAuthentication = async () => {
+      try {
+        if (token) {
+          const { data, status } = await getAccount(token);
+          if (status === 200) {
+            setAuthenticated(true);
+          } else {
+            setAuthenticated(false);
+          }
+        } else {
+          setAuthenticated(false);
         }
-      />
-    </Routes>
-  );
+      } catch (error) {
+        console.log({ error });
+        setAuthenticated(false);
+      } finally {
+        // Set loading to false after authentication check is done
+        setLoading(false);
+      }
+    };
+
+    checkAuthentication();
+  }, []); // Empty dependency array to run the effect only once
+
+  if (loading) {
+    // Show loading indicator or some placeholder while checking authentication
+    return (
+      <div
+        style={{ height: "100vh" }}
+        className="flex justify-center items-center w-full"
+      >
+        <Spin indicator={antIcon} size="large" />
+      </div>
+    );
+  }
+
+  return authenticated ? <Component {...rest} /> : <Navigate to="/" replace />;
 };
 
 const ProtectedRoutes = () => {
   return (
-    <>
-      <PrivateRoute exact path="/org" Component={Org} />
-      <PrivateRoute exact path="/employee" Component={Employee} />
-      <PrivateRoute exact path="/user" Component={User} />
-      <PrivateRoute exact path="/tracker" Component={Tracker} />
-      <PrivateRoute exact path="/metrics" Component={Metrics} />
-      <PrivateRoute exact path="/health" Component={Health} />
-      <PrivateRoute exact path="/configuration" Component={Configuration} />
-      <PrivateRoute exact path="/logs" Component={Logs} />
-    </>
+    <Routes>
+      <Route path="/org" element={<PrivateRoute component={Org} />} />
+      <Route path="/employee" element={<PrivateRoute component={Employee} />} />
+      <Route path="/user" element={<PrivateRoute component={User} />} />
+      <Route path="/tracker" element={<PrivateRoute component={Tracker} />} />
+      <Route path="/metrics" element={<PrivateRoute component={Metrics} />} />
+      <Route path="/health" element={<PrivateRoute component={Health} />} />
+      <Route
+        path="/configuration"
+        element={<PrivateRoute component={Configuration} />}
+      />
+      <Route path="/logs" element={<PrivateRoute component={Logs} />} />
+    </Routes>
   );
 };
 

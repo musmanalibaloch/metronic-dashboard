@@ -11,10 +11,9 @@ const Login = () => {
       const { data: id_token } = await login(values);
       localStorage.setItem("token", id_token.id_token);
       const { data } = await getAccount(id_token.id_token);
-      console.log({ data });
-      const res = await getSocketInfo();
-      console.log({ res });
-      navigate("/org");
+      const res = await getSocketInfo(id_token.id_token);
+      // navigate("/org");
+      window.location.replace("/org");
     } catch (error) {
       console.log(error);
     }
