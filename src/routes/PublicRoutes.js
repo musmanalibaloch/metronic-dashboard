@@ -53,11 +53,13 @@ const PublicRoute = ({ component: Component, ...rest }) => {
     );
   }
 
-  return authenticated ? (
-    <Component {...rest} />
-  ) : (
-    <Navigate to="/org" replace />
-  );
+  //   return authenticated ? (
+  //     <Component {...rest} />
+  //   ) : (
+  //     <Navigate to="/org" replace />
+  //   );
+  // };
+  return true ? <Component {...rest} /> : <Navigate to="/org" replace />;
 };
 
 const PublicRoutes = () => {
