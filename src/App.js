@@ -8,6 +8,7 @@ import PublicRoutes from "./routes/PublicRoutes";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 
 const App = () => {
+  console.log({ version: "0.0.1" });
   return (
     <Router>
       <div className="App">
